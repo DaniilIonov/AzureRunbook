@@ -1,7 +1,7 @@
 ﻿workflow Scale-UpDown-AzureVM {
 	[OutputType([System.Void])]
 	Param (
-		[Parameter (Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[ValidateNotNullOrEmpty()]
 		[String]
 		$subscriptionId,

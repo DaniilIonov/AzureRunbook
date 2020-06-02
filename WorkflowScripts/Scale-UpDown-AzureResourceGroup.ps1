@@ -1,7 +1,7 @@
 workflow Scale-UpDown-AzureResourceGroup {
     [OutputType([System.Void])]
     Param (
-        [Parameter (Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
         $subscriptionId,
