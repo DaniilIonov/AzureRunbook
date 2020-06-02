@@ -73,8 +73,8 @@ workflow Scale-UpDown-AzureResourceGroup {
         [ValidateNotNullOrEmpty()]
         [Int32]
         $newRUs,
-        
-        
+
+
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
         [String]
@@ -102,7 +102,7 @@ workflow Scale-UpDown-AzureResourceGroup {
         [Boolean]
         $perSiteScaling
     )
-    
+
     "Starting..." | Write-Output
 
     "Invoking Scale-UpDown-AzureVM..." | Write-Output
