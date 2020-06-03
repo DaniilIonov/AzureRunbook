@@ -64,10 +64,12 @@
 	if ($Null -ne $ElasticPool) {
 		"Scaling the Elastic Pool: $($ElasticPool.ElasticPoolName)" | Write-Output
 
-		$ElasticPool | Set-AzSqlElasticPool -Dtu $Dtu -DatabaseDtuMax $DatabaseDtuMax -DatabaseDtuMin $DatabaseDtuMin -StorageMB $StorageMB | Write-Output
+		InlineScript {
+			Set-AzSqlElasticPool -ResourceGroupName $Using:ResourceGroupName -ServerName $Using:ServerName -ElasticPoolName $Using:ElasticPoolName -Dtu $Using:Dtu -DatabaseDtuMax $Using:DatabaseDtuMax -DatabaseDtuMin $Using:DatabaseDtuMin -StorageMB $Using:StorageMB | Write-Output
+		}
 
 		"Elastic Pool scaling task complete." | Write-Output
-	} 
+	}
 	else {
 		"Elastic Pool unavailable. Please retry." | Write-Error
 	}

@@ -145,7 +145,7 @@ workflow Scale-UpDown-AzureResourceGroup {
 			}
 
 			"VM sizing task is complete." | Write-Output
-		} 
+		}
 		else {
 			"VM Size $VMSize is not available. Please retry." | Write-Error
 		}
@@ -165,10 +165,12 @@ workflow Scale-UpDown-AzureResourceGroup {
 	if ($Null -ne $ElasticPool) {
 		"Scaling the Elastic Pool: $($ElasticPool.ElasticPoolName)" | Write-Output
 
-		$ElasticPool | Set-AzSqlElasticPool -Dtu $Dtu -DatabaseDtuMax $DatabaseDtuMax -DatabaseDtuMin $DatabaseDtuMin -StorageMB $StorageMB | Write-Output
+		InlineScript {
+			Set-AzSqlElasticPool -ResourceGroupName $Using:ResourceGroupName -ServerName $Using:ServerName -ElasticPoolName $Using:ElasticPoolName -Dtu $Using:Dtu -DatabaseDtuMax $Using:DatabaseDtuMax -DatabaseDtuMin $Using:DatabaseDtuMin -StorageMB $Using:StorageMB | Write-Output
+		}
 
 		"Elastic Pool scaling task complete." | Write-Output
-	} 
+	}
 	else {
 		"Elastic Pool unavailable. Please retry." | Write-Error
 	}
@@ -186,14 +188,14 @@ workflow Scale-UpDown-AzureResourceGroup {
 
 	"Current throughput is $CurrentRUs. Minimum allowed throughput is $MinimumRUs." | Write-Output
 
-	if ([int]$NewRUs -lt [int]$MinimumRUs) {
+	if ([System.Int32]$NewRUs -lt [System.Int32]$MinimumRUs) {
 		"Requested new throughput of $NewRUs is less than minimum allowed throughput of $MinimumRUs." | Write-Output
 		"Using minimum allowed throughput of $MinimumRUs instead." | Write-Output
 		$NewRUs = $MinimumRUs
 	}
 
 
-	if ([int]$NewRUs -eq [int]$CurrentRUs) {
+	if ([System.Int32]$NewRUs -eq [System.Int32]$CurrentRUs) {
 		"New throughput is the same as current throughput. No change needed." | Write-Output
 	}
 	else {
@@ -210,7 +212,7 @@ workflow Scale-UpDown-AzureResourceGroup {
 
 	if ($AppServicePlans -notlike "All") {
 		$AppServicePlansToHandle = $AppServicePlans.Split(",")
-	} 
+	}
 	else {
 		$AppServicePlansToHandle = @(Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName).Name
 	}

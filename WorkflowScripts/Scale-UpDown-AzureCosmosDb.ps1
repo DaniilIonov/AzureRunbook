@@ -53,14 +53,14 @@
 
 	"Current throughput is $CurrentRUs. Minimum allowed throughput is $MinimumRUs." | Write-Output
 
-	if ([int]$NewRUs -lt [int]$MinimumRUs) {
+	if ([System.Int32]$NewRUs -lt [System.Int32]$MinimumRUs) {
 		"Requested new throughput of $NewRUs is less than minimum allowed throughput of $MinimumRUs." | Write-Output
 		"Using minimum allowed throughput of $MinimumRUs instead." | Write-Output
 		$NewRUs = $MinimumRUs
 	}
 
 
-	if ([int]$NewRUs -eq [int]$CurrentRUs) {
+	if ([System.Int32]$NewRUs -eq [System.Int32]$CurrentRUs) {
 		"New throughput is the same as current throughput. No change needed." | Write-Output
 	}
 	else {

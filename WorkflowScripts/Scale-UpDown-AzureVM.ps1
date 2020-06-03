@@ -64,7 +64,7 @@
 			}
 
 			"VM sizing task is complete." | Write-Output
-		} 
+		}
 		else {
 			"VM Size $VMSize is not available. Please retry." | Write-Error
 		}
