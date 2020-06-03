@@ -32,17 +32,17 @@
 
 	$context = Set-AzContext -SubscriptionId $subscriptionId
 
-    if ($azureVMList -notlike "All") {
-        $azureVMsToHandle = $azureVMList.Split(",")
-    }
-    else {
-        $azureVMsToHandle = @(Get-AzVM -ResourceGroupName $resourceGroupName).Name
-    }
-    "Azure VMs: $azureVMsToHandle" | Write-Output
+	if ($azureVMList -notlike "All") {
+		$azureVMsToHandle = $azureVMList.Split(",")
+	}
+	else {
+		$azureVMsToHandle = @(Get-AzVM -ResourceGroupName $resourceGroupName).Name
+	}
+	"Azure VMs: $azureVMsToHandle" | Write-Output
 
-    foreach ($azureVM in $azureVMsToHandle) {
-        if ($null -eq $(Get-AzVM -Name $azureVM)) {
-            "AzureVM : [$azureVM] - Does not exist! - Check your inputs" | Write-Error
+	foreach ($azureVM in $azureVMsToHandle) {
+		if ($null -eq $(Get-AzVM -Name $azureVM)) {
+			"AzureVM : [$azureVM] - Does not exist! - Check your inputs" | Write-Error
 		}
 	}
 
