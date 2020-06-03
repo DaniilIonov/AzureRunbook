@@ -15,7 +15,7 @@
 
 		[Parameter(Mandatory = $True)]
 		[System.String]
-		$VmSize
+		$VMSize
 	)
 
 	$ErrorActionPreference = "Stop"
@@ -47,22 +47,22 @@
 	}
 
 	foreach ($AzureVM in $AzureVMsToHandle) {
-		$VmSizeList = Get-AzVMSize -ResourceGroupName $ResourceGroupName -VMName $AzureVM
-		$Vm = Get-AzVM -ResourceGroupName $ResourceGroupName -VMName $AzureVM
+		$VMSizeList = Get-AzVMSize -ResourceGroupName $ResourceGroupName -VMName $AzureVM
+		$VM = Get-AzVM -ResourceGroupName $ResourceGroupName -VMName $AzureVM
 
-		if ($VmSizeList.Name -contains $VmSize -and $Null -ne $Vm) {
-			"VM named $AzureVM is scaling to size $VmSize" | Write-Output
+		if ($VMSizeList.Name -contains $VMSize -and $Null -ne $VM) {
+			"VM named $AzureVM is scaling to size $VMSize" | Write-Output
 
 			InlineScript {
-				$Vm = Get-AzVM -ResourceGroupName $Using:resourceGroupName -VMName $Using:azureVM
-				$Vm.HardwareProfile.VmSize = $Using:vmSize
-				Update-AzVM -VM $Vm -ResourceGroupName $Using:resourceGroupName
+				$VM = Get-AzVM -ResourceGroupName $Using:resourceGroupName -VMName $Using:azureVM
+				$VM.HardwareProfile.VMSize = $Using:VMSize
+				Update-AzVM -VM $VM -ResourceGroupName $Using:resourceGroupName
 			}
 
 			"VM sizing task is complete." | Write-Output
 		} 
 		else {
-			"VM Size $VmSize is not available. Please retry." | Write-Error
+			"VM Size $VMSize is not available. Please retry." | Write-Error
 		}
 	}
 
