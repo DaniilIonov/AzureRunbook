@@ -2,34 +2,42 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$SubscriptionId,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$ResourceGroupName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$ServerName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$ElasticPoolName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Int32]
 		$Dtu,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Int32]
 		$DatabaseDtuMax,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Int32]
 		$DatabaseDtuMin,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Int32]
 		$StorageMB
 	)
