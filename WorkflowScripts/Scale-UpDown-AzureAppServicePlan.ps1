@@ -1,33 +1,33 @@
 ﻿workflow Scale-UpDown-AzureAppServicePlan {
 	[OutputType([System.Void])]
 	Param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$subscriptionId,
+		$SubscriptionId,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$resourceGroupName,
+		$ResourceGroupName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$appServicePlans,
+		$AppServicePlans,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$tier,
+		$Tier,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Int32]
-		$numberofWorkers,
+		$NumberofWorkers,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$workerSize,
+		$WorkerSize,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Boolean]
-		$perSiteScaling
+		$PerSiteScaling
 	)
 
 	$ErrorActionPreference = "Stop"
@@ -37,35 +37,35 @@
 	"Starting..." | Write-Output
 
 	# Ensures you do not inherit an AzContext in your runbook
-	$autosave = Disable-AzContextAutosave –Scope Process
+	$Autosave = Disable-AzContextAutosave –Scope Process
 
-	$connection = Get-AutomationConnection -Name AzureRunAsConnection
-	$connectionResult = Connect-AzAccount -ServicePrincipal -Tenant $connection.TenantID -ApplicationId $connection.ApplicationID -CertificateThumbprint $connection.CertificateThumbprint
+	$Connection = Get-AutomationConnection -Name AzureRunAsConnection
+	$ConnectionResult = Connect-AzAccount -ServicePrincipal -Tenant $Connection.TenantID -ApplicationId $Connection.ApplicationID -CertificateThumbprint $Connection.CertificateThumbprint
 
-	$context = Set-AzContext -SubscriptionId $subscriptionId
+	$Context = Set-AzContext -SubscriptionId $SubscriptionId
 
-	if ($appServicePlans -notlike "All") {
-		$appServicePlansToHandle = $appServicePlans.Split(",")
+	if ($AppServicePlans -notlike "All") {
+		$AppServicePlansToHandle = $AppServicePlans.Split(",")
 	} 
 	else {
-		$appServicePlansToHandle = @(Get-AzAppServicePlan -ResourceGroupName $resourceGroupName).Name
+		$AppServicePlansToHandle = @(Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName).Name
 	}
-	"Azure App Service Plans: $appServicePlansToHandle" | Write-Output
+	"Azure App Service Plans: $AppServicePlansToHandle" | Write-Output
 
-	foreach ($appServicePlan in $appServicePlansToHandle) {
-		if (!(Get-AzAppServicePlan | Where-Object { $_.Name -like $appServicePlan })) {
-			"Azure App Service Plan : [$appServicePlan] - Does not exist! - Check your inputs" | Write-Error
+	foreach ($AppServicePlan in $AppServicePlansToHandle) {
+		if (!(Get-AzAppServicePlan | Where-Object { $_.Name -like $AppServicePlan })) {
+			"Azure App Service Plan : [$AppServicePlan] - Does not exist! - Check your inputs" | Write-Error
 		}
 	}
 
-	foreach	($appServicePlan in $appServicePlansToHandle) {
-		$appServicePlanObj = Get-AzAppServicePlan -ResourceGroupName $resourceGroupName -Name $appServicePlan
+	foreach	($AppServicePlan in $AppServicePlansToHandle) {
+		$AppServicePlanObj = Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlan
 
-		"App Service Plan name: $($appServicePlanObj.Name)" | Write-Output
-		"Current App Service Plan status: $($appServicePlanObj.Status), tier: $($appServicePlanObj.Sku.Name)" | Write-Output
-		"Scaling the App Service Plan: $($appServicePlan)" | Write-Output
+		"App Service Plan name: $($AppServicePlanObj.Name)" | Write-Output
+		"Current App Service Plan status: $($AppServicePlanObj.Status), tier: $($AppServicePlanObj.Sku.Name)" | Write-Output
+		"Scaling the App Service Plan: $($AppServicePlan)" | Write-Output
 
-		Set-AzAppServicePlan -ResourceGroupName $resourceGroupName -Name $appServicePlan -Tier $tier -NumberofWorkers $numberofWorkers -WorkerSize $workerSize -PerSiteScaling $perSiteScaling | Write-Output
+		Set-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlan -Tier $Tier -NumberofWorkers $NumberofWorkers -WorkerSize $WorkerSize -PerSiteScaling $PerSiteScaling | Write-Output
 
 		"App Service Plan scaling task complete." | Write-Output
 	}

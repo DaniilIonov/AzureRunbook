@@ -1,29 +1,29 @@
 ﻿workflow Scale-UpDown-AzureCosmosDb {
 	[OutputType([System.Void])]
 	Param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$subscriptionId,
+		$SubscriptionId,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$resourceGroupName,
+		$ResourceGroupName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$accountName,
+		$AccountName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$databaseName,
+		$DatabaseName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$containerName,
+		$ContainerName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Int32]
-		$newRUs
+		$NewRUs
 	)
 
 	$ErrorActionPreference = "Stop"
@@ -33,34 +33,34 @@
 	"Starting..." | Write-Output
 
 	# Ensures you do not inherit an AzContext in your runbook
-	$autosave = Disable-AzContextAutosave –Scope Process
+	$Autosave = Disable-AzContextAutosave –Scope Process
 
-	$connection = Get-AutomationConnection -Name AzureRunAsConnection
-	$connectionResult = Connect-AzAccount -ServicePrincipal -Tenant $connection.TenantID -ApplicationId $connection.ApplicationID -CertificateThumbprint $connection.CertificateThumbprint
+	$Connection = Get-AutomationConnection -Name AzureRunAsConnection
+	$ConnectionResult = Connect-AzAccount -ServicePrincipal -Tenant $Connection.TenantID -ApplicationId $Connection.ApplicationID -CertificateThumbprint $Connection.CertificateThumbprint
 
-	$context = Set-AzContext -SubscriptionId $subscriptionId
+	$Context = Set-AzContext -SubscriptionId $SubscriptionId
 
-	$throughput = Get-AzCosmosDBSqlContainerThroughput -ResourceGroupName $resourceGroupName -AccountName $accountName -DatabaseName $databaseName -Name $containerName
+	$Throughput = Get-AzCosmosDBSqlContainerThroughput -ResourceGroupName $ResourceGroupName -AccountName $AccountName -DatabaseName $DatabaseName -Name $ContainerName
 
-	$currentRUs = $throughput.Throughput
-	$minimumRUs = $throughput.MinimumThroughput
+	$CurrentRUs = $Throughput.Throughput
+	$MinimumRUs = $Throughput.MinimumThroughput
 
-	"Current throughput is $currentRUs. Minimum allowed throughput is $minimumRUs." | Write-Output
+	"Current throughput is $CurrentRUs. Minimum allowed throughput is $MinimumRUs." | Write-Output
 
-	if ([int]$newRUs -lt [int]$minimumRUs) {
-		"Requested new throughput of $newRUs is less than minimum allowed throughput of $minimumRUs." | Write-Output
-		"Using minimum allowed throughput of $minimumRUs instead." | Write-Output
-		$newRUs = $minimumRUs
+	if ([int]$NewRUs -lt [int]$MinimumRUs) {
+		"Requested new throughput of $NewRUs is less than minimum allowed throughput of $MinimumRUs." | Write-Output
+		"Using minimum allowed throughput of $MinimumRUs instead." | Write-Output
+		$NewRUs = $MinimumRUs
 	}
 
 
-	if ([int]$newRUs -eq [int]$currentRUs) {
+	if ([int]$NewRUs -eq [int]$CurrentRUs) {
 		"New throughput is the same as current throughput. No change needed." | Write-Output
 	}
 	else {
-		"Updating throughput to $newRUs." | Write-Output
+		"Updating throughput to $NewRUs." | Write-Output
 
-		Get-AzCosmosDBSqlContainer -ResourceGroupName $resourceGroupName -AccountName $accountName -DatabaseName $databaseName -Name $containerName | Update-AzCosmosDBSqlContainerThroughput -Throughput $newRUs | Write-Output
+		Get-AzCosmosDBSqlContainer -ResourceGroupName $ResourceGroupName -AccountName $AccountName -DatabaseName $DatabaseName -Name $ContainerName | Update-AzCosmosDBSqlContainerThroughput -Throughput $NewRUs | Write-Output
 	}
 
 	"End of script!" | Write-Output

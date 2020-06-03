@@ -1,37 +1,37 @@
 ﻿workflow Scale-UpDown-AzureSqlElasticPool {
 	[OutputType([System.Void])]
 	Param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$subscriptionId,
+		$SubscriptionId,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$resourceGroupName,
+		$ResourceGroupName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$serverName,
+		$ServerName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$elasticPoolName,
+		$ElasticPoolName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Int32]
-		$dtu,
+		$Dtu,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Int32]
-		$databaseDtuMax,
+		$DatabaseDtuMax,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Int32]
-		$databaseDtuMin,
+		$DatabaseDtuMin,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.Int32]
-		$storageMB
+		$StorageMB
 	)
 
 	$ErrorActionPreference = "Stop"
@@ -41,22 +41,22 @@
 	"Starting..." | Write-Output
 
 	# Ensures you do not inherit an AzContext in your runbook
-	$autosave = Disable-AzContextAutosave –Scope Process
+	$Autosave = Disable-AzContextAutosave –Scope Process
 
-	$connection = Get-AutomationConnection -Name AzureRunAsConnection
-	$connectionResult = Connect-AzAccount -ServicePrincipal -Tenant $connection.TenantID -ApplicationId $connection.ApplicationID -CertificateThumbprint $connection.CertificateThumbprint
+	$Connection = Get-AutomationConnection -Name AzureRunAsConnection
+	$ConnectionResult = Connect-AzAccount -ServicePrincipal -Tenant $Connection.TenantID -ApplicationId $Connection.ApplicationID -CertificateThumbprint $Connection.CertificateThumbprint
 
-	$context = Set-AzContext -SubscriptionId $subscriptionId
+	$Context = Set-AzContext -SubscriptionId $SubscriptionId
 
-	$elasticPool = Get-AzSqlElasticPool -ResourceGroupName $resourceGroupName -ServerName $serverName -ElasticPoolName $elasticPoolName
+	$ElasticPool = Get-AzSqlElasticPool -ResourceGroupName $ResourceGroupName -ServerName $ServerName -ElasticPoolName $ElasticPoolName
 
-	"Elastic Pool name: $($elasticPool.ElasticPoolName)" | Write-Output
-	"Current Elastic Pool status: $($elasticPool.State)" | Write-Output
+	"Elastic Pool name: $($ElasticPool.ElasticPoolName)" | Write-Output
+	"Current Elastic Pool status: $($ElasticPool.State)" | Write-Output
 
-	if ($null -ne $elasticPool) {
-		"Scaling the Elastic Pool: $($elasticPool.ElasticPoolName)" | Write-Output
+	if ($Null -ne $ElasticPool) {
+		"Scaling the Elastic Pool: $($ElasticPool.ElasticPoolName)" | Write-Output
 
-		$elasticPool | Set-AzSqlElasticPool -Dtu $dtu -DatabaseDtuMax $databaseDtuMax -DatabaseDtuMin $databaseDtuMin -StorageMB $storageMB | Write-Output
+		$ElasticPool | Set-AzSqlElasticPool -Dtu $Dtu -DatabaseDtuMax $DatabaseDtuMax -DatabaseDtuMin $DatabaseDtuMin -StorageMB $StorageMB | Write-Output
 
 		"Elastic Pool scaling task complete." | Write-Output
 	} 
