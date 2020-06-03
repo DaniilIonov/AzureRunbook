@@ -2,23 +2,19 @@ workflow Stop-Start-AzureVM {
 	[OutputType([System.Void])]
 	Param (
     	[Parameter(Mandatory = $true)]
-    	[ValidateNotNullOrEmpty()]
-    	[String]
+		[String]
     	$subscriptionId,
 
     	[Parameter(Mandatory = $true)]
-    	[ValidateNotNullOrEmpty()]
-    	[String]
+		[String]
     	$resourceGroupName,
 
     	[Parameter(Mandatory = $true)]
-    	[ValidateNotNullOrEmpty()]
-    	[String]
+		[String]
     	$azureVMList,
 
     	[Parameter(Mandatory = $true)]
-    	[ValidateNotNullOrEmpty()]
-    	[String]
+		[String]
     	$action
     )
 

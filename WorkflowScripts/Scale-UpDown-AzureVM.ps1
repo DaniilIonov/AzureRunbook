@@ -2,22 +2,18 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$subscriptionId,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$resourceGroupName,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$azureVMList,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$vmSize
 	)

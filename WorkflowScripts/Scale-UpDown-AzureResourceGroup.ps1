@@ -2,104 +2,83 @@ workflow Scale-UpDown-AzureResourceGroup {
     [OutputType([System.Void])]
     Param (
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $subscriptionId,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $resourceGroupName,
 
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $vmName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $vmSize,
 
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $serverName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $elasticPoolName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Int32]
+		[Int32]
         $dtu,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Int32]
+		[Int32]
         $databaseDtuMax,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Int32]
+		[Int32]
         $databaseDtuMin,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Int32]
+		[Int32]
         $storageMB,
 
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $accountName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $databaseName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $containerName,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Int32]
+		[Int32]
         $newRUs,
 
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [String]
+		[String]
         $appServicePlans,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [ValidateSet('Free', 'Shared', 'Basic', 'Standard', 'Premium')]
-        [String]
+		[String]
         $tier,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Int32]
+		[Int32]
         $numberofWorkers,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [ValidateSet('Small', 'Medium', 'Large', 'ExtraLarge')]
-        [String]
+		[String]
         $workerSize,
 
         [Parameter(Mandatory = $true)]
-        [ValidateNotNullOrEmpty()]
-        [Boolean]
+		[Boolean]
         $perSiteScaling
     )
 
