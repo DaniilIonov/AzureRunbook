@@ -104,24 +104,24 @@ workflow Scale-UpDown-AzureResourceGroup {
 	"Starting..." | Write-Output
 
 	"Invoking Scale-UpDown-AzureVM..." | Write-Output
-	Scale-UpDown-AzureVM -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -vmName $VmName -vmSize $VmSize
+	Scale-UpDown-AzureVM -SubscriptionId $SubscriptionId -ResourceGroupName $ResourceGroupName -VmName $VmName -VmSize $VmSize
 	"Invoked Scale-UpDown-AzureVM." | Write-Output
 
 	Checkpoint-Workflow
 
 	"Invoking Scale-UpDown-AzureSqlElasticPool..." | Write-Output
-	Scale-UpDown-AzureSqlElasticPool -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -serverName $ServerName -elasticPoolName $ElasticPoolName -dtu $Dtu -databaseDtuMax $DatabaseDtuMax -databaseDtuMin $DatabaseDtuMin -storageMB $StorageMB
+	Scale-UpDown-AzureSqlElasticPool -SubscriptionId $SubscriptionId -ResourceGroupName $ResourceGroupName -ServerName $ServerName -ElasticPoolName $ElasticPoolName -Dtu $Dtu -DatabaseDtuMax $DatabaseDtuMax -DatabaseDtuMin $DatabaseDtuMin -StorageMB $StorageMB
 	"Invoked Scale-UpDown-AzureSqlElasticPool." | Write-Output
 
 	Checkpoint-Workflow
 
 	"Invoking Scale-UpDown-AzureCosmosDb..." | Write-Output
-	Scale-UpDown-AzureCosmosDb -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -accountName $AccountName -databaseName $DatabaseName -containerName $ContainerName -newRUs $NewRUs
+	Scale-UpDown-AzureCosmosDb -SubscriptionId $SubscriptionId -ResourceGroupName $ResourceGroupName -AccountName $AccountName -DatabaseName $DatabaseName -ContainerName $ContainerName -NewRUs $NewRUs
 	"Invoked Scale-UpDown-AzureCosmosDb." | Write-Output
 
 	Checkpoint-Workflow
 
 	"Invoking Scale-UpDown-AzureAppServicePlan..." | Write-Output
-	Scale-UpDown-AzureAppServicePlan -subscriptionId $SubscriptionId -appServicePlans $AppServicePlans -resourceGroupName $ResourceGroupName -tier $Tier -numberofWorkers $NumberofWorkers -workerSize $WorkerSize -perSiteScaling $PerSiteScaling
+	Scale-UpDown-AzureAppServicePlan -SubscriptionId $SubscriptionId -AppServicePlans $AppServicePlans -ResourceGroupName $ResourceGroupName -Tier $Tier -NumberofWorkers $NumberofWorkers -WorkerSize $WorkerSize -PerSiteScaling $PerSiteScaling
 	"Invoked Scale-UpDown-AzureAppServicePlan." | Write-Output
 }
