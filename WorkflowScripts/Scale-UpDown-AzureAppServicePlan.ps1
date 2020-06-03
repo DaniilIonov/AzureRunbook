@@ -2,31 +2,31 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$subscriptionId,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$resourceGroupName,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$appServicePlans,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$tier,
 
 		[Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
 		$numberofWorkers,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$workerSize,
 
 		[Parameter(Mandatory = $true)]
-		[Boolean]
+		[System.Boolean]
 		$perSiteScaling
 	)
 
