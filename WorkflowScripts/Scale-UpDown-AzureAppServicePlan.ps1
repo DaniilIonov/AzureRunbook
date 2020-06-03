@@ -2,30 +2,37 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$SubscriptionId,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$ResourceGroupName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$AppServicePlans,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$Tier,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Int32]
 		$NumberofWorkers,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$WorkerSize,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Boolean]
 		$PerSiteScaling
 	)

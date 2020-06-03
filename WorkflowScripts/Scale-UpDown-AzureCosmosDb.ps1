@@ -2,26 +2,32 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$SubscriptionId,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$ResourceGroupName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$AccountName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$DatabaseName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.String]
 		$ContainerName,
 
 		[Parameter(Mandatory = $True)]
+		[ValidateNotNullOrEmpty()]
 		[System.Int32]
 		$NewRUs
 	)
