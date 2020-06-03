@@ -53,7 +53,7 @@
 
 	if ($AppServicePlans -notlike "All") {
 		$AppServicePlansToHandle = $AppServicePlans.Split(",")
-	} 
+	}
 	else {
 		$AppServicePlansToHandle = @(Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName).Name
 	}

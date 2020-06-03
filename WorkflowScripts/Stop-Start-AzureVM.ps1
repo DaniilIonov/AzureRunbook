@@ -52,7 +52,7 @@ workflow Stop-Start-AzureVM {
 	foreach ($AzureVM in $AzureVMsToHandle) {
 		if ($Null -eq $(Get-AzVM -Name $AzureVM)) {
 			"AzureVM : [$AzureVM] - Does not exist! - Check your inputs" | Write-Error
-		} 
+		}
 	}
 
 	if ($Action -like "Stop") {
@@ -62,7 +62,7 @@ workflow Stop-Start-AzureVM {
 			"Stopping the VM: $AzureVM" | Write-Output
 			Get-AzVM -Name $AzureVM | Stop-AzVM -Force | Write-Output
 		}
-	} 
+	}
 	else {
 		"Starting VMs:" | Write-Output
 
@@ -70,7 +70,7 @@ workflow Stop-Start-AzureVM {
 			"Starting the VM: $AzureVM" | Write-Output
 			Get-AzVM -Name $AzureVM | Start-AzVM | Write-Output
 		}
-	} 
+	}
 
 	"End of script!" | Write-Output
 }
