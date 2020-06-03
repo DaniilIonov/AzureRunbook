@@ -2,39 +2,30 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$subscriptionId,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$resourceGroupName,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[String]
 		$appServicePlans,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
-		[ValidateSet('Free', 'Shared', 'Basic', 'Standard', 'Premium')]
 		[String]
 		$tier,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[Int32]
 		$numberofWorkers,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
-		[ValidateSet('Small', 'Medium', 'Large', 'ExtraLarge')]
 		[String]
 		$workerSize,
 
 		[Parameter(Mandatory = $true)]
-		[ValidateNotNullOrEmpty()]
 		[Boolean]
 		$perSiteScaling
 	)
