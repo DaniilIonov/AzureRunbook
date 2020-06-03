@@ -45,7 +45,7 @@ workflow Stop-Start-AzureVM {
         $azureVMsToHandle = $azureVMList.Split(",")
     }
     else {
-        $azureVMsToHandle = @($(Get-AzVM -ResourceGroupName $resourceGroupName).Name)
+        $azureVMsToHandle = @(Get-AzVM -ResourceGroupName $resourceGroupName).Name
     }
     "Azure VMs: $azureVMsToHandle" | Write-Output
 
