@@ -1,72 +1,72 @@
 workflow Stop-Start-AzureVM {
 	[OutputType([System.Void])]
 	Param (
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$subscriptionId,
+		$subscriptionId,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$resourceGroupName,
+		$resourceGroupName,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$azureVMList,
+		$azureVMList,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$action
-    )
+		$action
+	)
 
-    $ErrorActionPreference = "Stop"
-    $WarningPreference = "Continue"
-    $VerbosePreference = "Continue"
+	$ErrorActionPreference = "Stop"
+	$WarningPreference = "Continue"
+	$VerbosePreference = "Continue"
 
-    $supportedActions = "Start", "Stop"
-    if ($supportedActions -notContains $action) {
-        "Action not supported: $action" | Write-Error
-    }
+	$supportedActions = "Start", "Stop"
+	if ($supportedActions -notContains $action) {
+		"Action not supported: $action" | Write-Error
+	}
 
-    "Starting..." | Write-Output
+	"Starting..." | Write-Output
 
-    # Ensures you do not inherit an AzContext in your runbook
-    $autosave = Disable-AzContextAutosave –Scope Process
+	# Ensures you do not inherit an AzContext in your runbook
+	$autosave = Disable-AzContextAutosave –Scope Process
 
-    $connection = Get-AutomationConnection -Name AzureRunAsConnection
-    $connectionResult = Connect-AzAccount -ServicePrincipal -Tenant $connection.TenantID -ApplicationId $connection.ApplicationID -CertificateThumbprint $connection.CertificateThumbprint
+	$connection = Get-AutomationConnection -Name AzureRunAsConnection
+	$connectionResult = Connect-AzAccount -ServicePrincipal -Tenant $connection.TenantID -ApplicationId $connection.ApplicationID -CertificateThumbprint $connection.CertificateThumbprint
 
-    $context = Set-AzContext -SubscriptionId $subscriptionId
+	$context = Set-AzContext -SubscriptionId $subscriptionId
 
-    if ($azureVMList -notlike "All") {
-        $azureVMsToHandle = $azureVMList.Split(",")
-    }
-    else {
-        $azureVMsToHandle = @(Get-AzVM -ResourceGroupName $resourceGroupName).Name
-    }
-    "Azure VMs: $azureVMsToHandle" | Write-Output
+	if ($azureVMList -notlike "All") {
+		$azureVMsToHandle = $azureVMList.Split(",")
+	}
+	else {
+		$azureVMsToHandle = @(Get-AzVM -ResourceGroupName $resourceGroupName).Name
+	}
+	"Azure VMs: $azureVMsToHandle" | Write-Output
 
-    foreach ($azureVM in $azureVMsToHandle) {
-        if ($null -eq $(Get-AzVM -Name $azureVM)) {
-            "AzureVM : [$azureVM] - Does not exist! - Check your inputs" | Write-Error
-        } 
-    }
+	foreach ($azureVM in $azureVMsToHandle) {
+		if ($null -eq $(Get-AzVM -Name $azureVM)) {
+			"AzureVM : [$azureVM] - Does not exist! - Check your inputs" | Write-Error
+		} 
+	}
 
-    if ($action -like "Stop") {
-        "Stopping VMs:" | Write-Output
+	if ($action -like "Stop") {
+		"Stopping VMs:" | Write-Output
 
-        foreach ($azureVM in $azureVMsToHandle) {
-            "Stopping the VM: $azureVM" | Write-Output
-            Get-AzVM -Name $azureVM | Stop-AzVM -Force | Write-Output
-        }
-    } 
-    else {
-        "Starting VMs:" | Write-Output
+		foreach ($azureVM in $azureVMsToHandle) {
+			"Stopping the VM: $azureVM" | Write-Output
+			Get-AzVM -Name $azureVM | Stop-AzVM -Force | Write-Output
+		}
+	} 
+	else {
+		"Starting VMs:" | Write-Output
 
-        foreach ($azureVM in $azureVMsToHandle) {
-            "Starting the VM: $azureVM" | Write-Output
-            Get-AzVM -Name $azureVM | Start-AzVM | Write-Output
-        }
-    } 
+		foreach ($azureVM in $azureVMsToHandle) {
+			"Starting the VM: $azureVM" | Write-Output
+			Get-AzVM -Name $azureVM | Start-AzVM | Write-Output
+		}
+	} 
 
-    "End of script!" | Write-Output
+	"End of script!" | Write-Output
 }

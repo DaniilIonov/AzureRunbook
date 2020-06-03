@@ -1,29 +1,29 @@
 ﻿workflow Scale-UpDown-AzureCosmosDb {
 	[OutputType([System.Void])]
 	Param (
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$subscriptionId,
+		$subscriptionId,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$resourceGroupName,
+		$resourceGroupName,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$accountName,
+		$accountName,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$databaseName,
+		$databaseName,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.String]
-    	$containerName,
+		$containerName,
 
-    	[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true)]
 		[System.Int32]
-    	$newRUs
+		$newRUs
 	)
 
 	$ErrorActionPreference = "Stop"
