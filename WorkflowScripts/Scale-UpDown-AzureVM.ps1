@@ -1,21 +1,21 @@
 ﻿workflow Scale-UpDown-AzureVM {
 	[OutputType([System.Void])]
 	Param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$subscriptionId,
+		$SubscriptionId,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$resourceGroupName,
+		$ResourceGroupName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$azureVMList,
+		$AzureVMList,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[System.String]
-		$vmSize
+		$VmSize
 	)
 
 	$ErrorActionPreference = "Stop"
@@ -25,44 +25,44 @@
 	"Starting..." | Write-Output
 
 	# Ensures you do not inherit an AzContext in your runbook
-	$autosave = Disable-AzContextAutosave –Scope Process
+	$Autosave = Disable-AzContextAutosave –Scope Process
 
-	$connection = Get-AutomationConnection -Name AzureRunAsConnection
-	$connectionResult = Connect-AzAccount -ServicePrincipal -Tenant $connection.TenantID -ApplicationId $connection.ApplicationID -CertificateThumbprint $connection.CertificateThumbprint
+	$Connection = Get-AutomationConnection -Name AzureRunAsConnection
+	$ConnectionResult = Connect-AzAccount -ServicePrincipal -Tenant $Connection.TenantID -ApplicationId $Connection.ApplicationID -CertificateThumbprint $Connection.CertificateThumbprint
 
-	$context = Set-AzContext -SubscriptionId $subscriptionId
+	$Context = Set-AzContext -SubscriptionId $SubscriptionId
 
-	if ($azureVMList -notlike "All") {
-		$azureVMsToHandle = $azureVMList.Split(",")
+	if ($AzureVMList -notlike "All") {
+		$AzureVMsToHandle = $AzureVMList.Split(",")
 	}
 	else {
-		$azureVMsToHandle = @(Get-AzVM -ResourceGroupName $resourceGroupName).Name
+		$AzureVMsToHandle = @(Get-AzVM -ResourceGroupName $ResourceGroupName).Name
 	}
-	"Azure VMs: $azureVMsToHandle" | Write-Output
+	"Azure VMs: $AzureVMsToHandle" | Write-Output
 
-	foreach ($azureVM in $azureVMsToHandle) {
-		if ($null -eq $(Get-AzVM -Name $azureVM)) {
-			"AzureVM : [$azureVM] - Does not exist! - Check your inputs" | Write-Error
+	foreach ($AzureVM in $AzureVMsToHandle) {
+		if ($Null -eq $(Get-AzVM -Name $AzureVM)) {
+			"AzureVM : [$AzureVM] - Does not exist! - Check your inputs" | Write-Error
 		}
 	}
 
-	foreach ($azureVM in $azureVMsToHandle) {
-		$vmSizeList = Get-AzVMSize -ResourceGroupName $resourceGroupName -VMName $azureVM
-		$vm = Get-AzVM -ResourceGroupName $resourceGroupName -VMName $azureVM
+	foreach ($AzureVM in $AzureVMsToHandle) {
+		$VmSizeList = Get-AzVMSize -ResourceGroupName $ResourceGroupName -VMName $AzureVM
+		$Vm = Get-AzVM -ResourceGroupName $ResourceGroupName -VMName $AzureVM
 
-		if ($vmSizeList.Name -contains $vmSize -and $null -ne $vm) {
-			"VM named $azureVM is scaling to size $vmSize" | Write-Output
+		if ($VmSizeList.Name -contains $VmSize -and $Null -ne $Vm) {
+			"VM named $AzureVM is scaling to size $VmSize" | Write-Output
 
 			InlineScript {
-				$vm = Get-AzVM -ResourceGroupName $using:resourceGroupName -VMName $using:azureVM
-				$vm.HardwareProfile.VmSize = $using:vmSize
-				Update-AzVM -VM $vm -ResourceGroupName $using:resourceGroupName
+				$Vm = Get-AzVM -ResourceGroupName $Using:resourceGroupName -VMName $Using:azureVM
+				$Vm.HardwareProfile.VmSize = $Using:vmSize
+				Update-AzVM -VM $Vm -ResourceGroupName $Using:resourceGroupName
 			}
 
 			"VM sizing task is complete." | Write-Output
 		} 
 		else {
-			"VM Size $vmSize is not available. Please retry." | Write-Error
+			"VM Size $VmSize is not available. Please retry." | Write-Error
 		}
 	}
 

@@ -1,127 +1,127 @@
 workflow Scale-UpDown-AzureResourceGroup {
 	[OutputType([System.Void])]
 	Param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$subscriptionId,
+		$SubscriptionId,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$resourceGroupName,
+		$ResourceGroupName,
 
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$vmName,
+		$VmName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$vmSize,
+		$VmSize,
 
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$serverName,
+		$ServerName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$elasticPoolName,
+		$ElasticPoolName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Int32]
-		$dtu,
+		$Dtu,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Int32]
-		$databaseDtuMax,
+		$DatabaseDtuMax,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Int32]
-		$databaseDtuMin,
+		$DatabaseDtuMin,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Int32]
-		$storageMB,
+		$StorageMB,
 
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$accountName,
+		$AccountName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$databaseName,
+		$DatabaseName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$containerName,
+		$ContainerName,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Int32]
-		$newRUs,
+		$NewRUs,
 
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$appServicePlans,
+		$AppServicePlans,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$tier,
+		$Tier,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Int32]
-		$numberofWorkers,
+		$NumberofWorkers,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.String]
-		$workerSize,
+		$WorkerSize,
 
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $True)]
 		[ValidateNotNullOrEmpty()]
 		[System.Boolean]
-		$perSiteScaling
+		$PerSiteScaling
 	)
 
 	"Starting..." | Write-Output
 
 	"Invoking Scale-UpDown-AzureVM..." | Write-Output
-	Scale-UpDown-AzureVM -subscriptionId $subscriptionId -resourceGroupName $resourceGroupName -vmName $vmName -vmSize $vmSize
+	Scale-UpDown-AzureVM -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -vmName $VmName -vmSize $VmSize
 	"Invoked Scale-UpDown-AzureVM." | Write-Output
 
 	Checkpoint-Workflow
 
 	"Invoking Scale-UpDown-AzureSqlElasticPool..." | Write-Output
-	Scale-UpDown-AzureSqlElasticPool -subscriptionId $subscriptionId -resourceGroupName $resourceGroupName -serverName $serverName -elasticPoolName $elasticPoolName -dtu $dtu -databaseDtuMax $databaseDtuMax -databaseDtuMin $databaseDtuMin -storageMB $storageMB
+	Scale-UpDown-AzureSqlElasticPool -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -serverName $ServerName -elasticPoolName $ElasticPoolName -dtu $Dtu -databaseDtuMax $DatabaseDtuMax -databaseDtuMin $DatabaseDtuMin -storageMB $StorageMB
 	"Invoked Scale-UpDown-AzureSqlElasticPool." | Write-Output
 
 	Checkpoint-Workflow
 
 	"Invoking Scale-UpDown-AzureCosmosDb..." | Write-Output
-	Scale-UpDown-AzureCosmosDb -subscriptionId $subscriptionId -resourceGroupName $resourceGroupName -accountName $accountName -databaseName $databaseName -containerName $containerName -newRUs $newRUs
+	Scale-UpDown-AzureCosmosDb -subscriptionId $SubscriptionId -resourceGroupName $ResourceGroupName -accountName $AccountName -databaseName $DatabaseName -containerName $ContainerName -newRUs $NewRUs
 	"Invoked Scale-UpDown-AzureCosmosDb." | Write-Output
 
 	Checkpoint-Workflow
 
 	"Invoking Scale-UpDown-AzureAppServicePlan..." | Write-Output
-	Scale-UpDown-AzureAppServicePlan -subscriptionId $subscriptionId -appServicePlans $appServicePlans -resourceGroupName $resourceGroupName -tier $tier -numberofWorkers $numberofWorkers -workerSize $workerSize -perSiteScaling $perSiteScaling
+	Scale-UpDown-AzureAppServicePlan -subscriptionId $SubscriptionId -appServicePlans $AppServicePlans -resourceGroupName $ResourceGroupName -tier $Tier -numberofWorkers $NumberofWorkers -workerSize $WorkerSize -perSiteScaling $PerSiteScaling
 	"Invoked Scale-UpDown-AzureAppServicePlan." | Write-Output
 }
