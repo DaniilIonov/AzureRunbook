@@ -2,27 +2,27 @@
 	[OutputType([System.Void])]
 	Param (
     	[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
     	$subscriptionId,
 
     	[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
     	$resourceGroupName,
 
     	[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
     	$accountName,
 
     	[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
     	$databaseName,
 
     	[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
     	$containerName,
 
     	[Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
     	$newRUs
 	)
 

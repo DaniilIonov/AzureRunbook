@@ -2,19 +2,19 @@
 	[OutputType([System.Void])]
 	Param (
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$subscriptionId,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$resourceGroupName,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$azureVMList,
 
 		[Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
 		$vmSize
 	)
 

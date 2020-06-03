@@ -2,83 +2,83 @@ workflow Scale-UpDown-AzureResourceGroup {
     [OutputType([System.Void])]
     Param (
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $subscriptionId,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $resourceGroupName,
 
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $vmName,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $vmSize,
 
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $serverName,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $elasticPoolName,
 
         [Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
         $dtu,
 
         [Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
         $databaseDtuMax,
 
         [Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
         $databaseDtuMin,
 
         [Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
         $storageMB,
 
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $accountName,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $databaseName,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $containerName,
 
         [Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
         $newRUs,
 
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $appServicePlans,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $tier,
 
         [Parameter(Mandatory = $true)]
-		[Int32]
+		[System.Int32]
         $numberofWorkers,
 
         [Parameter(Mandatory = $true)]
-		[String]
+		[System.String]
         $workerSize,
 
         [Parameter(Mandatory = $true)]
-		[Boolean]
+		[System.Boolean]
         $perSiteScaling
     )
 
